@@ -398,4 +398,9 @@
   <ItemGroup>
     <CustomBuild Include="binary_distrib\cef_binary_3.1547.1412_windows\cefclient.gyp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\aszUtil.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

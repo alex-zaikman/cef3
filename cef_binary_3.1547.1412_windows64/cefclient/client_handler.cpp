@@ -2,6 +2,7 @@
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 
+#include "include/aszUtil.h"
 #include "cefclient/client_handler.h"
 #include <stdio.h>
 #include <algorithm>
@@ -106,7 +107,7 @@ ClientHandler::ClientHandler()
   if (command_line->HasSwitch(cefclient::kUrl))
     m_StartupURL = command_line->GetSwitchValue(cefclient::kUrl);
   if (m_StartupURL.empty())
-    m_StartupURL = "http://cgs-emea.timetoknow.com/cgs";
+    m_StartupURL = HOME_PAGE;
 
   // Also use external dev tools if off-screen rendering is enabled since we
   // disallow popup windows.

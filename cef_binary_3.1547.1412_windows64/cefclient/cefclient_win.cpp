@@ -2,6 +2,7 @@
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 
+#include "include/aszUtil.h"
 #include "cefclient/cefclient.h"
 #include <windows.h>
 #include <commdlg.h>
@@ -28,7 +29,7 @@
 #define MAX_URL_LENGTH  255
 #define BUTTON_WIDTH 72
 #define URLBAR_HEIGHT  24
-#define SESSION_DIR "\\cef_session\\cache"
+
 
 // Global Variables:
 HINSTANCE hInst;   // current instance
@@ -93,7 +94,10 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
   CefSettings settings;
 
   // Populate the settings based on command line arguments.
-  AppGetSettings(settings);
+  
+  //asz AppGetSettings(settings);
+
+  //asz init settings
 
   setCachPath(settings);
 

@@ -298,6 +298,7 @@
     <None Include="cefclient\res\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aszUtil.h" />
     <ClInclude Include="include\cef_trace.h" />
     <ClInclude Include="include\cef_geolocation_handler.h" />
     <ClInclude Include="include\cef_download_handler.h" />

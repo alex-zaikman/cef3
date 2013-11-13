@@ -51,7 +51,7 @@ CefRefPtr<CefCommandLine> AppGetCommandLine() {
 void AppGetSettings(CefSettings& settings) {
   ASSERT(g_command_line.get());
   if (!g_command_line.get())
-    return;
+	return;
 
   CefString str;
 
