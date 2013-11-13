@@ -19,11 +19,16 @@
 #include "cefclient/resource.h"
 #include "cefclient/scheme_test.h"
 #include "cefclient/string_util.h"
+#include <stdio.h>  
+#include <direct.h>
 
+
+#define GetCurrentDir _getcwd
 #define MAX_LOADSTRING 100
 #define MAX_URL_LENGTH  255
 #define BUTTON_WIDTH 72
 #define URLBAR_HEIGHT  24
+#define SESSION_DIR "\\cef_session\\cache"
 
 // Global Variables:
 HINSTANCE hInst;   // current instance
@@ -612,9 +617,7 @@ void AppQuitMessageLoop() {
   }
 }
 
-#include <stdio.h>  /* defines FILENAME_MAX */
-#include <direct.h>
-#define GetCurrentDir _getcwd
+
 
 const wchar_t *GetWC(const char *c)
 {
@@ -637,7 +640,7 @@ void setCachPath(CefSettings& settings){
 
 		std::string wdName =std::string(cCurrentPath);
 		
-		std::string name = "\\cef_session";
+		std::string name = SESSION_DIR;
 
 		std::string ww = std::string( wdName + name);
 

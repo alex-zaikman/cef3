@@ -142,7 +142,7 @@ void RunRequestTest(CefRefPtr<CefBrowser> browser) {
 
 void RunPopupTest(CefRefPtr<CefBrowser> browser) {
   browser->GetMainFrame()->ExecuteJavaScript(
-      "window.open('http://www.google.com');", "about:blank", 0);
+      "window.open('http://cgs-emea.timetoknow.com/cgs');", "about:blank", 0);
 }
 
 void RunPluginInfoTest(CefRefPtr<CefBrowser> browser) {

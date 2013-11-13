@@ -106,7 +106,7 @@ ClientHandler::ClientHandler()
   if (command_line->HasSwitch(cefclient::kUrl))
     m_StartupURL = command_line->GetSwitchValue(cefclient::kUrl);
   if (m_StartupURL.empty())
-    m_StartupURL = "http://www.google.com/";
+    m_StartupURL = "http://cgs-emea.timetoknow.com/cgs";
 
   // Also use external dev tools if off-screen rendering is enabled since we
   // disallow popup windows.
