@@ -23,13 +23,13 @@ CefRefPtr<CefCommandLine> g_command_line;
 
 CefRefPtr<CefBrowser> AppGetBrowser() {
   if (!g_handler.get())
-    return NULL;
+	return NULL;
   return g_handler->GetBrowser();
 }
 
 CefWindowHandle AppGetMainHwnd() {
   if (!g_handler.get())
-    return NULL;
+	return NULL;
   return g_handler->GetMainHwnd();
 }
 
@@ -57,21 +57,21 @@ void AppGetSettings(CefSettings& settings) {
 
 #if defined(OS_WIN)
   settings.multi_threaded_message_loop =
-      g_command_line->HasSwitch(cefclient::kMultiThreadedMessageLoop);
+	  g_command_line->HasSwitch(cefclient::kMultiThreadedMessageLoop);
 #endif
 
   CefString(&settings.cache_path) =
-      g_command_line->GetSwitchValue(cefclient::kCachePath);
+	  g_command_line->GetSwitchValue(cefclient::kCachePath);
 
   // Specify a port to enable DevTools if one isn't already specified.
   if (!g_command_line->HasSwitch("remote-debugging-port"))
-    settings.remote_debugging_port = 8088;
+	settings.remote_debugging_port = 8088;
 }
 
 bool AppIsOffScreenRenderingEnabled() {
   ASSERT(g_command_line.get());
   if (!g_command_line.get())
-    return false;
+	return false;
 
   return g_command_line->HasSwitch(cefclient::kOffScreenRenderingEnabled);
 }
@@ -79,17 +79,17 @@ bool AppIsOffScreenRenderingEnabled() {
 void RunGetSourceTest(CefRefPtr<CefBrowser> browser) {
   class Visitor : public CefStringVisitor {
    public:
-    explicit Visitor(CefRefPtr<CefBrowser> browser) : browser_(browser) {}
-    virtual void Visit(const CefString& string) OVERRIDE {
-      std::string source = StringReplace(string, "<", "&lt;");
-      source = StringReplace(source, ">", "&gt;");
-      std::stringstream ss;
-      ss << "<html><body>Source:<pre>" << source << "</pre></body></html>";
-      browser_->GetMainFrame()->LoadString(ss.str(), "http://tests/getsource");
-    }
+	explicit Visitor(CefRefPtr<CefBrowser> browser) : browser_(browser) {}
+	virtual void Visit(const CefString& string) OVERRIDE {
+	  std::string source = StringReplace(string, "<", "&lt;");
+	  source = StringReplace(source, ">", "&gt;");
+	  std::stringstream ss;
+	  ss << "<html><body>Source:<pre>" << source << "</pre></body></html>";
+	  browser_->GetMainFrame()->LoadString(ss.str(), "http://tests/getsource");
+	}
    private:
-    CefRefPtr<CefBrowser> browser_;
-    IMPLEMENT_REFCOUNTING(Visitor);
+	CefRefPtr<CefBrowser> browser_;
+	IMPLEMENT_REFCOUNTING(Visitor);
   };
 
   browser->GetMainFrame()->GetSource(new Visitor(browser));
@@ -98,17 +98,17 @@ void RunGetSourceTest(CefRefPtr<CefBrowser> browser) {
 void RunGetTextTest(CefRefPtr<CefBrowser> browser) {
   class Visitor : public CefStringVisitor {
    public:
-    explicit Visitor(CefRefPtr<CefBrowser> browser) : browser_(browser) {}
-    virtual void Visit(const CefString& string) OVERRIDE {
-      std::string text = StringReplace(string, "<", "&lt;");
-      text = StringReplace(text, ">", "&gt;");
-      std::stringstream ss;
-      ss << "<html><body>Text:<pre>" << text << "</pre></body></html>";
-      browser_->GetMainFrame()->LoadString(ss.str(), "http://tests/gettext");
-    }
+	explicit Visitor(CefRefPtr<CefBrowser> browser) : browser_(browser) {}
+	virtual void Visit(const CefString& string) OVERRIDE {
+	  std::string text = StringReplace(string, "<", "&lt;");
+	  text = StringReplace(text, ">", "&gt;");
+	  std::stringstream ss;
+	  ss << "<html><body>Text:<pre>" << text << "</pre></body></html>";
+	  browser_->GetMainFrame()->LoadString(ss.str(), "http://tests/gettext");
+	}
    private:
-    CefRefPtr<CefBrowser> browser_;
-    IMPLEMENT_REFCOUNTING(Visitor);
+	CefRefPtr<CefBrowser> browser_;
+	IMPLEMENT_REFCOUNTING(Visitor);
   };
 
   browser->GetMainFrame()->GetText(new Visitor(browser));
@@ -133,7 +133,7 @@ void RunRequestTest(CefRefPtr<CefBrowser> browser) {
   // Add a custom header
   CefRequest::HeaderMap headerMap;
   headerMap.insert(
-      std::make_pair("X-My-Header", "My Header Value"));
+	  std::make_pair("X-My-Header", "My Header Value"));
   request->SetHeaderMap(headerMap);
 
   // Load the request
@@ -142,37 +142,37 @@ void RunRequestTest(CefRefPtr<CefBrowser> browser) {
 
 void RunPopupTest(CefRefPtr<CefBrowser> browser) {
   browser->GetMainFrame()->ExecuteJavaScript(
-      "window.open('http://cgs-emea.timetoknow.com/cgs');", "about:blank", 0);
+	  "window.open('http://cgs-emea.timetoknow.com/cgs');", "about:blank", 0);
 }
 
 void RunPluginInfoTest(CefRefPtr<CefBrowser> browser) {
   class Visitor : public CefWebPluginInfoVisitor {
    public:
-    explicit Visitor(CefRefPtr<CefBrowser> browser)
-        : browser_(browser) {
-      html_ = "<html><head><title>Plugin Info Test</title></head><body>"
-              "\n<b>Installed plugins:</b>";
-    }
-    ~Visitor() {
-      html_ += "\n</body></html>";
+	explicit Visitor(CefRefPtr<CefBrowser> browser)
+		: browser_(browser) {
+	  html_ = "<html><head><title>Plugin Info Test</title></head><body>"
+			  "\n<b>Installed plugins:</b>";
+	}
+	~Visitor() {
+	  html_ += "\n</body></html>";
 
-      // Load the html in the browser.
-      browser_->GetMainFrame()->LoadString(html_, "http://tests/plugin_info");
-    }
+	  // Load the html in the browser.
+	  browser_->GetMainFrame()->LoadString(html_, "http://tests/plugin_info");
+	}
 
-    virtual bool Visit(CefRefPtr<CefWebPluginInfo> info, int count, int total)
-        OVERRIDE {
-      html_ +=  "\n<br/><br/>Name: " + info->GetName().ToString() +
-                "\n<br/>Description: " + info->GetDescription().ToString() +
-                "\n<br/>Version: " + info->GetVersion().ToString() +
-                "\n<br/>Path: " + info->GetPath().ToString();
-      return true;
-    }
+	virtual bool Visit(CefRefPtr<CefWebPluginInfo> info, int count, int total)
+		OVERRIDE {
+	  html_ +=  "\n<br/><br/>Name: " + info->GetName().ToString() +
+				"\n<br/>Description: " + info->GetDescription().ToString() +
+				"\n<br/>Version: " + info->GetVersion().ToString() +
+				"\n<br/>Path: " + info->GetPath().ToString();
+	  return true;
+	}
 
    private:
-    std::string html_;
-    CefRefPtr<CefBrowser> browser_;
-    IMPLEMENT_REFCOUNTING(Visitor);
+	std::string html_;
+	CefRefPtr<CefBrowser> browser_;
+	IMPLEMENT_REFCOUNTING(Visitor);
   };
 
   CefVisitWebPluginInfo(new Visitor(browser));

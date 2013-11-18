@@ -113,12 +113,12 @@
 // GLOBAL METHODS - Body may be edited by hand.
 
 CEF_GLOBAL int CefExecuteProcess(const CefMainArgs& args,
-    CefRefPtr<CefApp> application) {
+	CefRefPtr<CefApp> application) {
   const char* api_hash = cef_api_hash(0);
   if (strcmp(api_hash, CEF_API_HASH_PLATFORM)) {
-    // The libcef API hash does not match the current header API hash.
-    DCHECK(false);
-    return 0;
+	// The libcef API hash does not match the current header API hash.
+	DCHECK(false);
+	return 0;
   }
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
@@ -127,20 +127,20 @@ CEF_GLOBAL int CefExecuteProcess(const CefMainArgs& args,
 
   // Execute
   int _retval = cef_execute_process(
-      &args,
-      CefAppCppToC::Wrap(application));
+	  &args,
+	  CefAppCppToC::Wrap(application));
 
   // Return type: simple
   return _retval;
 }
 
 CEF_GLOBAL bool CefInitialize(const CefMainArgs& args,
-    const CefSettings& settings, CefRefPtr<CefApp> application) {
+	const CefSettings& settings, CefRefPtr<CefApp> application) {
   const char* api_hash = cef_api_hash(0);
   if (strcmp(api_hash, CEF_API_HASH_PLATFORM)) {
-    // The libcef API hash does not match the current header API hash.
-    DCHECK(false);
-    return false;
+	// The libcef API hash does not match the current header API hash.
+	DCHECK(false);
+	return false;
   }
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
@@ -149,9 +149,9 @@ CEF_GLOBAL bool CefInitialize(const CefMainArgs& args,
 
   // Execute
   int _retval = cef_initialize(
-      &args,
-      &settings,
-      CefAppCppToC::Wrap(application));
+	  &args,
+	  &settings,
+	  CefAppCppToC::Wrap(application));
 
   // Return type: bool
   return _retval?true:false;
@@ -253,10 +253,13 @@ CEF_GLOBAL void CefRunMessageLoop() {
 }
 
 CEF_GLOBAL void CefQuitMessageLoop() {
-  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
-
   // Execute
-  cef_quit_message_loop();
+  try{
+	cef_quit_message_loop();
+  }catch(...){
+  //asz exit bug
+	exit(0);
+  }
 }
 
 CEF_GLOBAL void CefSetOSModalLoop(bool osModalLoop) {
@@ -264,73 +267,73 @@ CEF_GLOBAL void CefSetOSModalLoop(bool osModalLoop) {
 
   // Execute
   cef_set_osmodal_loop(
-      osModalLoop);
+	  osModalLoop);
 }
 
 CEF_GLOBAL bool CefGetGeolocation(
-    CefRefPtr<CefGetGeolocationCallback> callback) {
+	CefRefPtr<CefGetGeolocationCallback> callback) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: callback; type: refptr_diff
   DCHECK(callback.get());
   if (!callback.get())
-    return false;
+	return false;
 
   // Execute
   int _retval = cef_get_geolocation(
-      CefGetGeolocationCallbackCppToC::Wrap(callback));
+	  CefGetGeolocationCallbackCppToC::Wrap(callback));
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefAddCrossOriginWhitelistEntry(const CefString& source_origin,
-    const CefString& target_protocol, const CefString& target_domain,
-    bool allow_target_subdomains) {
+	const CefString& target_protocol, const CefString& target_domain,
+	bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
   DCHECK(!source_origin.empty());
   if (source_origin.empty())
-    return false;
+	return false;
   // Verify param: target_protocol; type: string_byref_const
   DCHECK(!target_protocol.empty());
   if (target_protocol.empty())
-    return false;
+	return false;
   // Unverified params: target_domain
 
   // Execute
   int _retval = cef_add_cross_origin_whitelist_entry(
-      source_origin.GetStruct(),
-      target_protocol.GetStruct(),
-      target_domain.GetStruct(),
-      allow_target_subdomains);
+	  source_origin.GetStruct(),
+	  target_protocol.GetStruct(),
+	  target_domain.GetStruct(),
+	  allow_target_subdomains);
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefRemoveCrossOriginWhitelistEntry(
-    const CefString& source_origin, const CefString& target_protocol,
-    const CefString& target_domain, bool allow_target_subdomains) {
+	const CefString& source_origin, const CefString& target_protocol,
+	const CefString& target_domain, bool allow_target_subdomains) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: source_origin; type: string_byref_const
   DCHECK(!source_origin.empty());
   if (source_origin.empty())
-    return false;
+	return false;
   // Verify param: target_protocol; type: string_byref_const
   DCHECK(!target_protocol.empty());
   if (target_protocol.empty())
-    return false;
+	return false;
   // Unverified params: target_domain
 
   // Execute
   int _retval = cef_remove_cross_origin_whitelist_entry(
-      source_origin.GetStruct(),
-      target_protocol.GetStruct(),
-      target_domain.GetStruct(),
-      allow_target_subdomains);
+	  source_origin.GetStruct(),
+	  target_protocol.GetStruct(),
+	  target_domain.GetStruct(),
+	  allow_target_subdomains);
 
   // Return type: bool
   return _retval?true:false;
@@ -351,8 +354,8 @@ CEF_GLOBAL bool CefGetPath(PathKey key, CefString& path) {
 
   // Execute
   int _retval = cef_get_path(
-      key,
-      path.GetWritableStruct());
+	  key,
+	  path.GetWritableStruct());
 
   // Return type: bool
   return _retval?true:false;
@@ -364,32 +367,32 @@ CEF_GLOBAL bool CefLaunchProcess(CefRefPtr<CefCommandLine> command_line) {
   // Verify param: command_line; type: refptr_same
   DCHECK(command_line.get());
   if (!command_line.get())
-    return false;
+	return false;
 
   // Execute
   int _retval = cef_launch_process(
-      CefCommandLineCToCpp::Unwrap(command_line));
+	  CefCommandLineCToCpp::Unwrap(command_line));
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefRegisterSchemeHandlerFactory(const CefString& scheme_name,
-    const CefString& domain_name,
-    CefRefPtr<CefSchemeHandlerFactory> factory) {
+	const CefString& domain_name,
+	CefRefPtr<CefSchemeHandlerFactory> factory) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: scheme_name; type: string_byref_const
   DCHECK(!scheme_name.empty());
   if (scheme_name.empty())
-    return false;
+	return false;
   // Unverified params: domain_name, factory
 
   // Execute
   int _retval = cef_register_scheme_handler_factory(
-      scheme_name.GetStruct(),
-      domain_name.GetStruct(),
-      CefSchemeHandlerFactoryCppToC::Wrap(factory));
+	  scheme_name.GetStruct(),
+	  domain_name.GetStruct(),
+	  CefSchemeHandlerFactoryCppToC::Wrap(factory));
 
   // Return type: bool
   return _retval?true:false;
@@ -410,7 +413,7 @@ CEF_GLOBAL bool CefCurrentlyOn(CefThreadId threadId) {
 
   // Execute
   int _retval = cef_currently_on(
-      threadId);
+	  threadId);
 
   // Return type: bool
   return _retval?true:false;
@@ -422,46 +425,46 @@ CEF_GLOBAL bool CefPostTask(CefThreadId threadId, CefRefPtr<CefTask> task) {
   // Verify param: task; type: refptr_diff
   DCHECK(task.get());
   if (!task.get())
-    return false;
+	return false;
 
   // Execute
   int _retval = cef_post_task(
-      threadId,
-      CefTaskCppToC::Wrap(task));
+	  threadId,
+	  CefTaskCppToC::Wrap(task));
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefPostDelayedTask(CefThreadId threadId,
-    CefRefPtr<CefTask> task, int64 delay_ms) {
+	CefRefPtr<CefTask> task, int64 delay_ms) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: task; type: refptr_diff
   DCHECK(task.get());
   if (!task.get())
-    return false;
+	return false;
 
   // Execute
   int _retval = cef_post_delayed_task(
-      threadId,
-      CefTaskCppToC::Wrap(task),
-      delay_ms);
+	  threadId,
+	  CefTaskCppToC::Wrap(task),
+	  delay_ms);
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefBeginTracing(CefRefPtr<CefTraceClient> client,
-    const CefString& categories) {
+	const CefString& categories) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Unverified params: client, categories
 
   // Execute
   int _retval = cef_begin_tracing(
-      CefTraceClientCppToC::Wrap(client),
-      categories.GetStruct());
+	  CefTraceClientCppToC::Wrap(client),
+	  categories.GetStruct());
 
   // Return type: bool
   return _retval?true:false;
@@ -503,12 +506,12 @@ CEF_GLOBAL bool CefParseURL(const CefString& url, CefURLParts& parts) {
   // Verify param: url; type: string_byref_const
   DCHECK(!url.empty());
   if (url.empty())
-    return false;
+	return false;
 
   // Execute
   int _retval = cef_parse_url(
-      url.GetStruct(),
-      &parts);
+	  url.GetStruct(),
+	  &parts);
 
   // Return type: bool
   return _retval?true:false;
@@ -519,49 +522,49 @@ CEF_GLOBAL bool CefCreateURL(const CefURLParts& parts, CefString& url) {
 
   // Execute
   int _retval = cef_create_url(
-      &parts,
-      url.GetWritableStruct());
+	  &parts,
+	  url.GetWritableStruct());
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL bool CefRegisterExtension(const CefString& extension_name,
-    const CefString& javascript_code, CefRefPtr<CefV8Handler> handler) {
+	const CefString& javascript_code, CefRefPtr<CefV8Handler> handler) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: extension_name; type: string_byref_const
   DCHECK(!extension_name.empty());
   if (extension_name.empty())
-    return false;
+	return false;
   // Verify param: javascript_code; type: string_byref_const
   DCHECK(!javascript_code.empty());
   if (javascript_code.empty())
-    return false;
+	return false;
   // Unverified params: handler
 
   // Execute
   int _retval = cef_register_extension(
-      extension_name.GetStruct(),
-      javascript_code.GetStruct(),
-      CefV8HandlerCppToC::Wrap(handler));
+	  extension_name.GetStruct(),
+	  javascript_code.GetStruct(),
+	  CefV8HandlerCppToC::Wrap(handler));
 
   // Return type: bool
   return _retval?true:false;
 }
 
 CEF_GLOBAL void CefVisitWebPluginInfo(
-    CefRefPtr<CefWebPluginInfoVisitor> visitor) {
+	CefRefPtr<CefWebPluginInfoVisitor> visitor) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: visitor; type: refptr_diff
   DCHECK(visitor.get());
   if (!visitor.get())
-    return;
+	return;
 
   // Execute
   cef_visit_web_plugin_info(
-      CefWebPluginInfoVisitorCppToC::Wrap(visitor));
+	  CefWebPluginInfoVisitorCppToC::Wrap(visitor));
 }
 
 CEF_GLOBAL void CefRefreshWebPlugins() {
@@ -577,11 +580,11 @@ CEF_GLOBAL void CefAddWebPluginPath(const CefString& path) {
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
 
   // Execute
   cef_add_web_plugin_path(
-      path.GetStruct());
+	  path.GetStruct());
 }
 
 CEF_GLOBAL void CefAddWebPluginDirectory(const CefString& dir) {
@@ -590,11 +593,11 @@ CEF_GLOBAL void CefAddWebPluginDirectory(const CefString& dir) {
   // Verify param: dir; type: string_byref_const
   DCHECK(!dir.empty());
   if (dir.empty())
-    return;
+	return;
 
   // Execute
   cef_add_web_plugin_directory(
-      dir.GetStruct());
+	  dir.GetStruct());
 }
 
 CEF_GLOBAL void CefRemoveWebPluginPath(const CefString& path) {
@@ -603,11 +606,11 @@ CEF_GLOBAL void CefRemoveWebPluginPath(const CefString& path) {
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
 
   // Execute
   cef_remove_web_plugin_path(
-      path.GetStruct());
+	  path.GetStruct());
 }
 
 CEF_GLOBAL void CefUnregisterInternalWebPlugin(const CefString& path) {
@@ -616,11 +619,11 @@ CEF_GLOBAL void CefUnregisterInternalWebPlugin(const CefString& path) {
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
 
   // Execute
   cef_unregister_internal_web_plugin(
-      path.GetStruct());
+	  path.GetStruct());
 }
 
 CEF_GLOBAL void CefForceWebPluginShutdown(const CefString& path) {
@@ -629,11 +632,11 @@ CEF_GLOBAL void CefForceWebPluginShutdown(const CefString& path) {
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
 
   // Execute
   cef_force_web_plugin_shutdown(
-      path.GetStruct());
+	  path.GetStruct());
 }
 
 CEF_GLOBAL void CefRegisterWebPluginCrash(const CefString& path) {
@@ -642,29 +645,29 @@ CEF_GLOBAL void CefRegisterWebPluginCrash(const CefString& path) {
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
 
   // Execute
   cef_register_web_plugin_crash(
-      path.GetStruct());
+	  path.GetStruct());
 }
 
 CEF_GLOBAL void CefIsWebPluginUnstable(const CefString& path,
-    CefRefPtr<CefWebPluginUnstableCallback> callback) {
+	CefRefPtr<CefWebPluginUnstableCallback> callback) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Verify param: path; type: string_byref_const
   DCHECK(!path.empty());
   if (path.empty())
-    return;
+	return;
   // Verify param: callback; type: refptr_diff
   DCHECK(callback.get());
   if (!callback.get())
-    return;
+	return;
 
   // Execute
   cef_is_web_plugin_unstable(
-      path.GetStruct(),
-      CefWebPluginUnstableCallbackCppToC::Wrap(callback));
+	  path.GetStruct(),
+	  CefWebPluginUnstableCallbackCppToC::Wrap(callback));
 }
 

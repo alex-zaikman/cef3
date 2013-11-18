@@ -22,6 +22,7 @@
     <ProjectGuid>{6617FED9-C5D4-4907-BF55-A90062A6683F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cefclient</RootNamespace>
+    <ProjectName>cgsclient</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
@@ -127,7 +128,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>C:/Program Files (x86)/Windows Kits/8.0/Lib/win8/um/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -393,6 +394,7 @@
   <ItemGroup>
     <ClCompile Include="cefclient\performance_test_tests.cpp" />
     <ClCompile Include="cefclient\cefclient_win.cpp" />
+    <ClCompile Include="cefclient\aszUtil.cpp" />
     <ClCompile Include="cefclient\window_test_win.cpp" />
     <ClCompile Include="cefclient\cefclient_osr_widget_win.cpp" />
     <ClCompile Include="cefclient\string_util.cpp" />

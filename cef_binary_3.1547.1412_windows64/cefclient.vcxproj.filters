@@ -403,4 +403,9 @@
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cefclient\aszUtil.cpp">
+      <Filter>cefclient</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

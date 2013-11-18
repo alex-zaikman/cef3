@@ -22,9 +22,9 @@
 #include "cefclient/string_util.h"
 #include <stdio.h>  
 #include <direct.h>
+#include "include/aszUtil.h"
 
 
-#define GetCurrentDir _getcwd
 #define MAX_LOADSTRING 100
 #define MAX_URL_LENGTH  255
 #define BUTTON_WIDTH 72
@@ -239,8 +239,8 @@ static void ModifyZoom(CefRefPtr<CefBrowser> browser, double delta) {
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 						 LPARAM lParam) {
-  static HWND backWnd = NULL, forwardWnd = NULL, reloadWnd = NULL,
-	  stopWnd = NULL, editWnd = NULL;
+//  static HWND backWnd = NULL, forwardWnd = NULL, reloadWnd = NULL,
+//	  stopWnd = NULL, editWnd = NULL;
   static WNDPROC editWndOldProc = NULL;
 
   // Static members used for the find dialog.
@@ -254,28 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
   PAINTSTRUCT ps;
   HDC hdc;
 
-  if (hWnd == editWnd) {
-	// Callback for the edit window
-	switch (message) {
-	case WM_CHAR:
-	  if (wParam == VK_RETURN && g_handler.get()) {
-		// When the user hits the enter key load the URL
-		CefRefPtr<CefBrowser> browser = g_handler->GetBrowser();
-		wchar_t strPtr[MAX_URL_LENGTH+1] = {0};
-		*((LPWORD)strPtr) = MAX_URL_LENGTH;
-		LRESULT strLen = SendMessage(hWnd, EM_GETLINE, 0, (LPARAM)strPtr);
-		if (strLen > 0) {
-		  strPtr[strLen] = 0;
-		  browser->GetMainFrame()->LoadURL(strPtr);
-		}
-
-		return 0;
-	  }
-	}
-
-	return (LRESULT)CallWindowProc(editWndOldProc, hWnd, message, wParam,
-								   lParam);
-  } else {
+   {
 	// Callback for the main window
 	switch (message) {
 	case WM_CREATE: {
@@ -285,10 +264,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 
 	  // Create the child windows used for navigation
 	  RECT rect;
-	  int x = 0;
+//	  int x = 0;
 
 	  GetClientRect(hWnd, &rect);
-
+/*
 	  backWnd = CreateWindow(L"BUTTON", L"Back",
 							  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON
 							  | WS_DISABLED, x, 0, BUTTON_WIDTH, URLBAR_HEIGHT,
@@ -320,17 +299,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 							  ES_AUTOVSCROLL | ES_AUTOHSCROLL| WS_DISABLED,
 							  x, 0, rect.right - BUTTON_WIDTH * 4,
 							  URLBAR_HEIGHT, hWnd, 0, hInst, 0);
+*/
 
 	  // Assign the edit window's WNDPROC to this function so that we can
 	  // capture the enter key
-	  editWndOldProc =
-		  reinterpret_cast<WNDPROC>(GetWindowLongPtr(editWnd, GWLP_WNDPROC));
-	  SetWindowLongPtr(editWnd, GWLP_WNDPROC,
-		  reinterpret_cast<LONG_PTR>(WndProc));
-	  g_handler->SetEditHwnd(editWnd);
-	  g_handler->SetButtonHwnds(backWnd, forwardWnd, reloadWnd, stopWnd);
+	//  editWndOldProc =
+	//	  reinterpret_cast<WNDPROC>(GetWindowLongPtr(editWnd, GWLP_WNDPROC));
+	//  SetWindowLongPtr(editWnd, GWLP_WNDPROC,
+	//	  reinterpret_cast<LONG_PTR>(WndProc));
+	//  g_handler->SetEditHwnd(editWnd);
+	//  g_handler->SetButtonHwnds(backWnd, forwardWnd, reloadWnd, stopWnd);
 
-	  rect.top += URLBAR_HEIGHT;
+	//  rect.top += URLBAR_HEIGHT;
 
 	  CefWindowInfo info;
 	  CefBrowserSettings settings;
@@ -368,20 +348,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 	  // Parse the menu selections:
 	  switch (wmId) {
 	  case IDM_ABOUT:
-		DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 		return 0;
 	  case IDM_EXIT:
 		if (g_handler.get())
 		  g_handler->CloseAllBrowsers(false);
 		return 0;
 	  case ID_WARN_CONSOLEMESSAGE:
-		if (g_handler.get()) {
-		  std::wstringstream ss;
-		  ss << L"Console messages will be written to "
-			  << std::wstring(CefString(g_handler->GetLogFile()));
-		  MessageBox(hWnd, ss.str().c_str(), L"Console Messages",
-			  MB_OK | MB_ICONINFORMATION);
-		}
 		return 0;
 	  case ID_WARN_DOWNLOADCOMPLETE:
 	  case ID_WARN_DOWNLOADERROR:
@@ -401,62 +373,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 		}
 		return 0;
 	  case IDC_NAV_BACK:   // Back button
-		if (browser.get())
-		  browser->GoBack();
-		return 0;
 	  case IDC_NAV_FORWARD:  // Forward button
-		if (browser.get())
-		  browser->GoForward();
-		return 0;
 	  case IDC_NAV_RELOAD:  // Reload button
-		if (browser.get())
-		  browser->Reload();
-		return 0;
 	  case IDC_NAV_STOP:  // Stop button
-		if (browser.get())
-		  browser->StopLoad();
 		return 0;
 	  case ID_TESTS_GETSOURCE:  // Test the GetSource function
-		if (browser.get())
-		  RunGetSourceTest(browser);
-		return 0;
 	  case ID_TESTS_GETTEXT:  // Test the GetText function
-		if (browser.get())
-		  RunGetTextTest(browser);
-		return 0;
 	  case ID_TESTS_POPUP:  // Test a popup window
-		if (browser.get())
-		  RunPopupTest(browser);
-		return 0;
 	  case ID_TESTS_REQUEST:  // Test a request
-		if (browser.get())
-		  RunRequestTest(browser);
-		return 0;
 	  case ID_TESTS_PLUGIN_INFO:  // Test plugin info
-		if (browser.get())
-		  RunPluginInfoTest(browser);
-		return 0;
 	  case ID_TESTS_ZOOM_IN:
-		if (browser.get())
-		  ModifyZoom(browser, 0.5);
-		return 0;
 	  case ID_TESTS_ZOOM_OUT:
-		if (browser.get())
-		  ModifyZoom(browser, -0.5);
-		return 0;
 	  case ID_TESTS_ZOOM_RESET:
-		if (browser.get())
-		  browser->GetHost()->SetZoomLevel(0.0);
-		return 0;
 	  case ID_TESTS_TRACING_BEGIN:
-		g_handler->BeginTracing();
-		return 0;
 	  case ID_TESTS_TRACING_END:
-		g_handler->EndTracing();
-		return 0;
 	  case ID_TESTS_OTHER_TESTS:
-		if (browser.get())
-		  RunOtherTests(browser);
 		return 0;
 	  }
 	  break;
@@ -489,13 +420,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 		  // window size
 		  RECT rect;
 		  GetClientRect(hWnd, &rect);
-		  rect.top += URLBAR_HEIGHT;
+		//  rect.top += URLBAR_HEIGHT;
 
-		  int urloffset = rect.left + BUTTON_WIDTH * 4;
+		//  int urloffset = rect.left + BUTTON_WIDTH * 4;
 
 		  HDWP hdwp = BeginDeferWindowPos(1);
-		  hdwp = DeferWindowPos(hdwp, editWnd, NULL, urloffset,
-			0, rect.right - urloffset, URLBAR_HEIGHT, SWP_NOZORDER);
+		//  hdwp = DeferWindowPos(hdwp, editWnd, NULL, urloffset,
+		//	0, rect.right - urloffset, URLBAR_HEIGHT, SWP_NOZORDER);
 		  hdwp = DeferWindowPos(hdwp, hwnd, NULL,
 			rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 			SWP_NOZORDER);
@@ -609,7 +540,7 @@ std::string AppGetWorkingDirectory() {
   return szWorkingDir;
 }
 
-void AppQuitMessageLoop() {
+void AppQuitMessageLoop() {  //asz todo fix exit 
   CefRefPtr<CefCommandLine> command_line = AppGetCommandLine();
   if (command_line->HasSwitch(cefclient::kMultiThreadedMessageLoop)) {
 	// Running in multi-threaded message loop mode. Need to execute
@@ -623,32 +554,16 @@ void AppQuitMessageLoop() {
 
 
 
-const wchar_t *GetWC(const char *c)
-{
-	const size_t cSize = strlen(c)+1;
-	wchar_t* wc = new wchar_t[cSize];
-	mbstowcs (wc, c, cSize);
-
-	return wc;
-}
-
 
 void setCachPath(CefSettings& settings){
 
-
-		 char cCurrentPath[FILENAME_MAX];
-
-		GetCurrentDir(cCurrentPath, sizeof(cCurrentPath));
-
-		cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; 
-
-		std::string wdName =std::string(cCurrentPath);
+		std::string wdName = getCurrentWorkingPath() ; 
 		
 		std::string name = SESSION_DIR;
 
 		std::string ww = std::string( wdName + name);
 
-		const wchar_t* szName =GetWC(ww.c_str());
+		const wchar_t* szName = GetWC(ww.c_str());
 
 		cef_string_utf16_t* s = new cef_string_utf16_t;
 		memset(s, 0, sizeof(cef_string_utf16_t));
