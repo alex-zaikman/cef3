@@ -9,7 +9,6 @@ configFile::configFile(){
 }
 
 string configFile::getHomePage(){
-	//return "http://tm8-860/cgs";
 	return m_config.empty() ? [&](){  getConfig(); return m_config.find("homeaddress")->second; }() :  m_config.find("homeaddress")->second;
 }
 

@@ -602,7 +602,7 @@ void ClientHandler::CloseAllBrowsers(bool force_close) {
 	// Execute on the UI thread.
 	CefPostTask(TID_UI,
 		NewCefRunnableMethod(this, &ClientHandler::CloseAllBrowsers,
-							 force_close));
+							 true));
 	return;
   }
 

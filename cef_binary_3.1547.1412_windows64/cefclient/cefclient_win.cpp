@@ -105,7 +105,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 
   settings.persist_session_cookies = true;
 
-  settings.multi_threaded_message_loop = true;
+  settings.multi_threaded_message_loop = false;
 
 
   // Initialize CEF.
@@ -351,7 +351,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 		return 0;
 	  case IDM_EXIT:
 		if (g_handler.get())
-		  g_handler->CloseAllBrowsers(false);
+		  g_handler->CloseAllBrowsers(true);
 		return 0;
 	  case ID_WARN_CONSOLEMESSAGE:
 		return 0;
@@ -457,7 +457,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 	case WM_EXITMENULOOP:
 	  if (!wParam) {
 		// Exiting the menu loop for the application menu.
-		CefSetOSModalLoop(false);
+		CefSetOSModalLoop(true);
 	  }
 	  break;
 
@@ -540,7 +540,7 @@ std::string AppGetWorkingDirectory() {
   return szWorkingDir;
 }
 
-void AppQuitMessageLoop() {  //asz todo fix exit 
+void AppQuitMessageLoop() {  
   CefRefPtr<CefCommandLine> command_line = AppGetCommandLine();
   if (command_line->HasSwitch(cefclient::kMultiThreadedMessageLoop)) {
 	// Running in multi-threaded message loop mode. Need to execute

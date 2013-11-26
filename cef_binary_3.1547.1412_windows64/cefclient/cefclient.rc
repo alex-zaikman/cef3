@@ -142,7 +142,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_APP_TITLE           "cgsclient"
+    IDS_APP_TITLE           "Content Generation Studio"
     IDC_CEFCLIENT           "CGSCLIENT"
     IDS_OSR_WIDGET_CLASS    "CGSCLIENT-OSR-WIDGET"
 END

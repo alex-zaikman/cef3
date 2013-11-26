@@ -19,7 +19,7 @@ void ClientHandler::OnAddressChange(CefRefPtr<CefBrowser> browser,
 
   if (m_BrowserId == browser->GetIdentifier() && frame->IsMain())   {
     // Set the edit window text
-    SetWindowText(m_EditHwnd, std::wstring(url).c_str());
+   // SetWindowText(m_EditHwnd, std::wstring(url).c_str());
   }
 }
 
@@ -33,7 +33,7 @@ void ClientHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
     // The frame window will be the parent of the browser window
     hwnd = GetParent(hwnd);
   }
-  SetWindowText(hwnd, std::wstring(title).c_str());
+//  SetWindowText(hwnd, std::wstring(title).c_str());
 }
 
 void ClientHandler::SendNotification(NotificationType type) {
